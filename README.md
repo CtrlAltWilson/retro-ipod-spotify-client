@@ -154,7 +154,8 @@ def refresh_data():
 ```
 We're not done yet!
 
-#StartX
+# StartX
+
 I kept running into an issue with the Xauth: `xauth: timeout in locking authority file /home/pi/.Xauthority`. I was not sure what could be causing it, but I read that this was not really needed and safe to deleted. So I did, I ran `sudo rm /home/pi/.Xauthority` I ran into another issue where when using startx, it will not launch and returns an error 
 `Cannot Open /dev/tty0 (Permission Denied)` to resolve this, I had to use `sudo chown pi /dev/tty0`. This works, but resets when after rebooting. So I created a script:
 
