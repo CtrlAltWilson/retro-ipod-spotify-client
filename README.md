@@ -1,7 +1,12 @@
-I ran into a couple issues during this installation, but managed to get it up and running. Here are some of the issues and solutions:
+Hey everyone, 
+
+I want to show everyone what I did to resolve some of the major issues I've been running into during the installation @dupontgu's amazing project. 
+
+Some background: I don't have an iPod or anything, and this was all done on my Raspberry Pi 4 in a PiBoy DMG. My plan for this is to be able to launch spotipy via RetroPie. 
 
 # [Errno 98] Address already in use
-You may see this error when attempting to launch the spotipypod.py
+After going through the installation I tried running spotipy.py, but I ran into a couple of issues with the [Errno 98] Address in use. I went out of my mind thinking it was related to the UDP_PORT or even the OAuth port. Maybe it was the server address or redis? Nah, throw all of that out the window. This issue is because of a .cache not being found. 
+
 ```
 python3 spotifypod.py
 Traceback (most recent call last):
@@ -35,11 +40,11 @@ File "/usr/lib/python3.7/socketserver.py", line 466, in server_bind
 self.socket.bind(self.server_address)
 OSError: [Errno 98] Address already in use
 ```
+sebakitzing's post (https://github.com/dupontgu/retro-ipod-spotify-client/issues/22) led me to the right path with this issue.
+You can verify if the .cache folder exists by going to /retro-ipod-spotify-client/frontend and typing `ls -a`
+I was able to authorize spotipy through Midori browser, but for some reason, the .cache file would not create. I looked around and found Perelin's solution for Spotipy's OAuth (https://github.com/perelin/spotipy_oauth_demo). With a little modification to the spotipy_oauth_demo, I was able to create a cache folder to the /home/pi/ folder:
 
-This is because of a caching error, not a port in use error. You can verify this by going to /retro-ipod-spotify-client/frontend and typing `ls -a`
-I was able to authorize spotipy through Midori browser, but for some reason the .cache file would not create. I looked around and found Perelin's solution for Spotipy's OAuth (https://github.com/perelin/spotipy_oauth_demo). With a little modification to the spotipy_oauth_demo, I was able to create a cache folder to the /home/pi/ folder:
-
-Please note: you will have to add your own client ID and secret from your Spotify Developer Dashboard. You will also need to add http://localhost:8080 to your Redirect URIs in the dashboard. I will explain the scoping modificaitons in the next topic.
+Please note: you will have to add your own client ID and secret from your Spotify Developer Dashboard. You will also need to add http://localhost:8080 to your Redirect URIs in the dashboard. I will explain the scoping modifications in the next topic.
 ```
 SPOTIPY_CLIENT_ID = 'XXXXXXX'
 SPOTIPY_CLIENT_SECRET = 'XXXXXX'
@@ -78,7 +83,7 @@ This command opens the permission rights to the .cache folder.
 
 After that, I was able to run spotipypod.py...into another issue.
 
-#Scope Errors
+# Scope Errors
 Another issue occurred when running spotipypod.py, somewhere along the line of:
 ```
 https://api.spotify.com/v1/me/following?type=artist&limit=50
@@ -181,6 +186,7 @@ After tackling these issues, I was able to load spotipypod.py at last.
 
 Side note: During this process, I followed HerrEurobeat's other post (https://github.com/dupontgu/retro-ipod-spotify-client/pull/24) on removing emoticons from playlist names so it doesn't error. I have a couple playlists with this and for 'future-proofing' this definitely did the job.
 
+Cheers
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
