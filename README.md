@@ -90,7 +90,7 @@ https://api.spotify.com/v1/me/following?type=artist&limit=50
 spotipy.client.SpotifyException: http status: 403, code:-1 - https://api.spotify.com/v1/me/albums?limit=100&offset=0:
      Insufficient client scope
 ```
-This can be resolved with adding more scopes into spotify_manager.py
+This can be resolved by adding more scopes into spotify_manager.py
 ```
 scope = "user-follow-read," \
         "user-library-read," \
@@ -113,7 +113,7 @@ scope = "user-follow-read," \
 This fixed pretty much my scope issues.
 
 # NoneType Error
-This part was tricky. As a person of many many... many playlists, some some tracks become unavailable or null. spotipypod.py doesn't know what to do with these null tracks and will end up in an error before even starting. I had to modify some code around spotify_manager.py to skip null tracks. Here are the instances and its code:
+This part was tricky. As a person of many many... many playlists, some tracks become unavailable or null. spotipypod.py doesn't know what to do with these null tracks and will end up in an error before even starting. I had to modify some code around spotify_manager.py to skip null tracks. Here are the instances and their code:
 
 !!Oh yeah before doing this, make sure to fix the playlist order first according to HerrEurobeat's post (https://github.com/dupontgu/retro-ipod-spotify-client/pull/26).
 ```
@@ -178,13 +178,13 @@ sudo chown pi /dev/tty7
 startx
 
 ```
-The reason why I repeated this step all the way until tty7 was because of the virtual consoles. If you already have a startx console running, using startx again will create another virtual console, which is a different ttyX set. Setting chown for 8 tty will make it safe to load in any one of these. I know this is a bit of a mess, but I have not ran into any issues as of yet. I am open for optimizations and improvements.
+The reason why I repeated this step all the way until tty7 was because of the virtual consoles. If you already have a startx console running, using startx again will create another virtual console, which is a different ttyX set. Setting chown for 8 tty will make it safe to load in any one of these. I know this is a bit of a mess, but I have not run into any issues as of yet. I am open for optimizations and improvements.
 
 make sure to use `sudo chmod +x [yourscript].sh` to allow running ./[yourscript].sh
 
 After tackling these issues, I was able to load spotipypod.py at last.
 
-Side note: During this process, I followed HerrEurobeat's other post (https://github.com/dupontgu/retro-ipod-spotify-client/pull/24) on removing emoticons from playlist names so it doesn't error. I have a couple playlists with this and for 'future-proofing' this definitely did the job.
+Side note: During this process, I followed HerrEurobeat's other post (https://github.com/dupontgu/retro-ipod-spotify-client/pull/24) on removing emoticons from playlist names so it doesn't error. I have a couple of playlists with this and for 'future-proofing this definitely did the job.
 
 Cheers
 
