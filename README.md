@@ -174,6 +174,7 @@ startx
 ```
 The reason why I repeated this step all the way until tty7 was because of the virtual consoles. If you already have a startx console running, using startx again will create another virtual console, which is a different ttyX set. Setting chown for 8 tty will make it safe to load in any one of these. I know this is a bit of a mess, but I have not ran into any issues as of yet. I am open for optimizations and improvements.
 
+make sure to use `sudo chmod +x [yourscript].sh` to allow running ./[yourscript].sh
 
 After tackling these issues, I was able to load spotipypod.py at last.
 
